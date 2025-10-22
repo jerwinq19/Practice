@@ -1,0 +1,27 @@
+another idea is public anonymous postboard, anyone can post a prob or experience they're going through tapos anyone can reply anonymously.
+
+
+pwede rin mag-report ng user. Users have id's (User 0021 - AB) instead of usernames for a more neutral environment. That way pwede pa din mag-report ng u
+
+* main user
+user_id
+nickname
+username
+password
+email
+bio
+pfp if possible
+
+* thread table
+author - pk user
+thead_id
+title
+content
+date posted
+category
+
+*comment
+author - pk user
+comment_id
+content
+timestamp
