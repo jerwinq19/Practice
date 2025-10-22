@@ -1,8 +1,7 @@
-# routers
-from rest_framework import routers
-from .viewsets import SampleViewSets
+# custom queries
+from django.urls import path
+from . import views
 
-router = routers.DefaultRouter()
-router.register(r'sample', SampleViewSets)
-
-urlpatterns = router.urls
+urlpatterns = [
+    
+]
