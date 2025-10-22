@@ -2,14 +2,11 @@ import './App.css'
 import Example from './components/register'
 import Login from './components/login'
 
-function App() {
-
+const App = () => {
   return (
-    <div>
-      <h1>register</h1>
-      <Example />
-      <h1>login</h1>
-      <Login />
+    <div className='flex flex-col justify-center items-center w-screen h-screen bg-gray-200 font-[Inter ]'>
+
+      <Login />     
     </div>
   )
 }
