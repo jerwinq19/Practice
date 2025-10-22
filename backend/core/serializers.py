@@ -14,36 +14,32 @@ class UserSerializers(serializers.ModelSerializer):
         model = CustomUser
         fields = ('username', 'password', 'first_name', 'last_name', 'email', 'nickname', 'bio')
         
-    def create(self, validated_data):
-        print('hello')
-        user = CustomUser.objects.create_user(**validated_data)
-        return user
 
 # comment serializer
 class CommentSerializers(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='author.username', read_only=True)
+    author_name = serializers.SerializerMethodField()
     
     class Meta:
         model = Comment
         fields = ('author','author_name', 'thread', 'content', 'timestamp', 'is_annony')
-        
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.is_annony is True:
-            data['author_name'] = "Anonymous"
+    
+    
+    def get_author_name(self, obj):
+        if obj.is_annony:
+            return "Anonymous"
+        return obj.author.username
     
 
 # Threaad serializer
 class ThreadSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='author.username', read_only=True)
+    author_name = serializers.SerializerMethodField()
     comments = CommentSerializers(many=True, read_only=True)
     
     class Meta:
         model = Thread
         fields = ('id', 'category','author','author_name','title', 'content', 'comments', 'is_annony')
         
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.is_annony is True:
-            data['author_name'] = "Anonymous"
-        return data
+    def get_author_name(self, obj):
+        if obj.is_annony:
+            return "Annonymous"
+        return obj.author.username
