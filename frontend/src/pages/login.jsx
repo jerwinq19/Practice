@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -21,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between w-4/5 md:w-3/5 lg:w-2/5 h-4/5 bg-white rounded-lg p-4 lg:px-20 shadow-lg">
+    <div className="flex flex-col items-center justify-between w-4/5 md:w-3/5 lg:w-2/5 h-4/5 bg-white rounded-lg p-4 lg:px-5 shadow-lg">
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           SIGN IN
@@ -63,7 +64,7 @@ const Login = () => {
 
       <h1 className="text-sm">
         Don't have an account?{" "}
-        <span className="text-blue-500">Register Here</span>
+        <Link to='/register' className="text-blue-500">Register Here</Link>
       </h1>
     </div>
   );
