@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -9,6 +9,8 @@ const Register = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const formSubmit = async (data) => {
     console.log(data)
         try {
@@ -16,6 +18,7 @@ const Register = () => {
         if (response.status === 200) {
             console.log(response.data)
             console.log("it work")
+            navigate("Home")
         }    
         } catch (error) {
             console.log(error)
