@@ -41,22 +41,10 @@ class LogoutView(APIView):
     3. Limit how user can comment to avoid spam
 '''
 
-class ListCreateThread(generics.ListCreateAPIView):
-    '''
-        ano ginagawa neto?
-        si ListCreateAPIView from generics is kaya nya gawin yung 
-        pag retrive using pk (id or foriengkey) tas mag create din
-    '''
+class ListAllUserThread(generics.ListAPIView):
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
     permission_classes = [IsAuthenticated]
 
-class DeleteUpdateThread(generics.RetrieveUpdateDestroyAPIView):
-    '''
-        same lang din as ListCreateView
-        pero ang pinag kaiba ito  ay nag uupdate and delete ng Thread
-    '''
-    queryset = Thread.objects.all()
-    serializer_class = ThreadSerializer
-    permission_classes = [IsAuthenticated]
+
 
