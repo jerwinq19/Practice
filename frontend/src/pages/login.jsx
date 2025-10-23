@@ -1,6 +1,7 @@
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import LogoutButton from "../components/logoutButton";
 
 const Login = () => {
   const {
@@ -13,20 +14,19 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formSubmit = async (data) => {
+    console.log(data)
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/login/",
-        data
-      );
-      if (response.status === 200) {
-        console.log(response.data);
-        console.log("it work");
-        navigate("Home");
-      }
-    } catch (error) {
-      console.log(error);
-      setError("root", { message: "Invalid Credentials, please try again" });
+      const res = await axiosInstance.post('token/', data)
+      console.log(res.data)
+      // store the jwt access and refresh token to the local storage
+      localStorage.setItem('access_token', res.data.access)
+      localStorage.setItem('refresh_token', res.data.refresh)
+      navigate('/home')
     }
+    catch (error) {
+      console.log(error)
+    }
+    console.log('dasdsa')
   };
 
   return (
@@ -75,6 +75,7 @@ const Login = () => {
           Register Here
         </Link>
       </h1>
+
     </div>
   );
 };
