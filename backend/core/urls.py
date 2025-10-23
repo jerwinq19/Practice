@@ -3,6 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('register/', views.RegisterView, name="register_view"),
-    path('login/', views.LoginView, name="login_view")
+    path('thread/', views.ListCreateThread.as_view(), name="create_thread"),
+    path('thread/<int:pk>/', views.DeleteUpdateThread.as_view(), name="create_thread"),
 ]

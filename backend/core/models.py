@@ -2,12 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import uuid
 
-class Sample(models.Model):
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return f"{self.name}"
-
 # custom user model
 class CustomUser(AbstractUser):
     nickname = models.CharField(max_length=60, default="")
@@ -37,7 +31,7 @@ class Thread(models.Model):
         return f"{self.author} - {self.category}"
 
 class Comment(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comment_author')
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
     is_annony = models.BooleanField(default=False)

@@ -1,26 +1,26 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-
+import axiosInstance from "../utils/axios";
 const Login = () => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const LoginHandler = (e) => {
+    const LoginHandler = async (e) => {
         e.preventDefault()
+
         const data = {
             "username": username,
             "password": password
         }
-
-        axios.post('http://127.0.0.1:8000/api/login/', data)
-            .then(res => {
-                console.log(res.data)
-                console.log("it work")
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        try{
+            const res = await axiosInstance.post('token/', data)
+            // store the jwt access and refresh token to the local storage
+            localStorage.setItem('access_token', res.data.access)
+            localStorage.setItem('refresh_token', res.data.refresh)
+        }
+        catch(error) {
+            console.log(error)
+        }
     }
 
     return (
