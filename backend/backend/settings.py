@@ -43,10 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework_simplejwt',
-    'corsheaders',
-    'rest_framework',
-    'core'
+    'rest_framework_simplejwt.token_blacklist', # make sure to add this
+    'rest_framework_simplejwt', # this one too
+    'corsheaders', # this one 
+    'rest_framework', # this one
+    'core' # and this one
 ]
 
 MIDDLEWARE = [
@@ -133,10 +134,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # simple jwt
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axios";
 
 const Register = () => {
   const {
@@ -13,16 +13,13 @@ const Register = () => {
   const navigate = useNavigate();
 
   const formSubmit = async (data) => {
-  
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
-        data
-      );
-      if (response.status === 200) {
-        console.log(response.data);
+      const response = await axiosInstance.post('user/', data)
+      console.log(response.data)
+      // 201 kasi create nigga
+      if (response.status === 201) { 
         console.log("it work");
-        navigate("Home");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -63,9 +60,22 @@ const Register = () => {
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
+          type="email"
+          placeholder="Email"
+          {...register("email", {
+            required: "This is required", pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Invalid email address",
+            }
+          })}
+        />
+        <p className="text-red-600 text-xs">{errors.email?.message}</p>
+
+        <input
+          className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
           type="text"
           placeholder="First Name"
-          {...register("firstname", { required: "This is required" })}
+          {...register("first_name", { required: "This is required" })}
         />
         <p className="text-red-600 text-xs">{errors.firstname?.message}</p>
 
@@ -73,21 +83,9 @@ const Register = () => {
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
           type="text"
           placeholder="Last Name"
-          {...register("lastname", { required: "This is required" })}
+          {...register("last_name", { required: "This is required" })}
         />
         <p className="text-red-600 text-xs">{errors.lastname?.message}</p>
-
-        <input
-          className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
-          type="email"
-          placeholder="Email"
-          {...register("email", { required: "This is required", pattern: {
-            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            message: "Invalid email address",
-          }})}
-        />
-        <p className="text-red-600 text-xs">{errors.email?.message}</p>
-
 
         <button
           disabled={isSubmitting}
