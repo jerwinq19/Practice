@@ -1,15 +1,20 @@
 import './App.css'
-import Example from './components/register'
-import Login from './components/login'
+import {Routes, Route} from 'react-router-dom'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import Homepage from './pages/Homepage'
+import NotFound from './pages/NotFound'
 
-function App() {
-
+const App = () => {
   return (
-    <div>
-      <h1>register</h1>
-      <Example />
-      <h1>login</h1>
-      <Login />
+    <div className='flex flex-col pt-20 items-center w-screen h-screen bg-gray-100 font-[Inter]'>
+      <Routes>
+        <Route path='/' element={<Login />}/>
+        <Route path='/register' element={<Register />}/>
+        <Route path='/home' element={<Homepage />}/>
+        <Route path='*' element={<NotFound />}/>
+
+      </Routes>
     </div>
   )
 }
