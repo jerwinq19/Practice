@@ -20,12 +20,14 @@ from .models import CustomUser, Comment, Thread
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('username', 'password', 'email','first_name', 'last_name')
+        fields = ('pk','username', 'password', 'email','first_name', 'last_name')
         extra_kwargs = {'password': {"write_only": True}}
     
     # automatically creates a user
     def create(self, validated_data):
-        print(validated_data)
+        if CustomUser.objects.filter(username=validated_data['username']).exists():
+            raise serializers.ValidationError("Username already exists.")
+        
         user = CustomUser.objects.create_user(**validated_data)
         return user
 
@@ -51,7 +53,7 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = ('id', 'category','author','author_name','title', 'content', 'comments', 'is_annony')
-                
+        
     def get_author_name(self, obj):
         if obj.is_annony:
             return "Annonymous"
