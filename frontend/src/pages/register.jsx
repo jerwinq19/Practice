@@ -29,7 +29,7 @@ const Register = () => {
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center mb-2">
+      <div className="flex flex-col items-center mb-2 mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           REGISTER
         </h1>
@@ -96,11 +96,9 @@ const Register = () => {
         <p className="text-red-600 text-xs mb-5">{errors.root?.message}</p>
       </form>
 
-      <h1 className="text-sm">
-        Already have an account?
-        <Link to="/" className="text-blue-500">
-          Login Here
-        </Link>
+      <h1 className="text-xs md:text-sm">
+        Already have an account ?{" "}
+        <Link to="/" className="text-blue-500"> Login Here</Link>
       </h1>
     </div>
   );

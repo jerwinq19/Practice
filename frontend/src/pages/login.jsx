@@ -25,13 +25,13 @@ const Login = () => {
     }
     catch (error) {
       console.log(error)
-    }
-    console.log('dasdsa')
+      setError("root", { message: "Invalid credentials, please try again" });
+    }   
   };
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           SIGN IN
         </h1>
