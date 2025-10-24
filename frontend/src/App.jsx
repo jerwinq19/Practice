@@ -4,6 +4,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Homepage from './pages/Homepage'
 import NotFound from './pages/NotFound'
+import CreateThread from './pages/CreateThread'
+import ProtectedRoute from './components/protectedRoutes'
 
 const App = () => {
   return (
@@ -11,9 +13,12 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/register' element={<Register />}/>
-        <Route path='/home' element={<Homepage />}/>
+        <Route path='/home' element={
+          <ProtectedRoute>
+            <Homepage />
+          </ProtectedRoute>
+        }/>
         <Route path='*' element={<NotFound />}/>
-
       </Routes>
     </div>
   )
