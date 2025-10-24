@@ -9,7 +9,7 @@ import ProtectedRoute from './components/protectedRoutes'
 
 const App = () => {
   return (
-    <div className='flex flex-col items-center w-screen h-screen bg-gray-100 font-[Inter]'>
+    <div className='flex flex-col items-center w-screen h-screen bg-gray-200 font-[Inter]'>
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/register' element={<Register />}/>

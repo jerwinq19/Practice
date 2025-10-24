@@ -14,19 +14,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formSubmit = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
-      const res = await axiosInstance.post('token/', data)
-      console.log(res.data)
+      const res = await axiosInstance.post("token/", data);
+      console.log(res.data);
       // store the jwt access and refresh token to the local storage
-      localStorage.setItem('access_token', res.data.access)
-      localStorage.setItem('refresh_token', res.data.refresh)
-      navigate('/home')
-    }
-    catch (error) {
-      console.log(error)
+      localStorage.setItem("access_token", res.data.access);
+      localStorage.setItem("refresh_token", res.data.refresh);
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
       setError("root", { message: "Invalid credentials, please try again" });
-    }   
+    }
   };
 
   return (
@@ -50,7 +49,15 @@ const Login = () => {
           placeholder="Username"
           {...register("username", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs m-0">{errors.username?.message}</p>
+        {errors.username && (
+          <p className="text-red-600 text-xs m-0">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.username?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
@@ -58,7 +65,15 @@ const Login = () => {
           placeholder="Password"
           {...register("password", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs">{errors.password?.message}</p>
+        {errors.password && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.password?.message}
+          </p>
+        )}
 
         <button
           disabled={isSubmitting}
@@ -66,7 +81,15 @@ const Login = () => {
         >
           {isSubmitting ? "Loading..." : "Login"}
         </button>
-        <p className="text-red-600 text-xs mb-5">{errors.root?.message}</p>
+        {errors.root && (
+          <p className="text-red-600 text-xs mb-5">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.root?.message}
+          </p>
+        )}
       </form>
 
       <h1 className="text-xs md:text-sm">
@@ -75,7 +98,6 @@ const Login = () => {
           Register Here
         </Link>
       </h1>
-
     </div>
   );
 };
