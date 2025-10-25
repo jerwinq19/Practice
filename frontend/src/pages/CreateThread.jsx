@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import LogoutButton from '../components/logoutButton';
 import FetchCurrentUser from "../utils/userInfo";
 
-const CreateThread = () => {
+const CreateThread = ({ toast, FetchAllThread }) => {
     const [user, setUser] = useState([]); // mahalaga
 
     const [category, setCategory] = useState('');
@@ -32,9 +32,13 @@ const CreateThread = () => {
                     Authorization: `Bearer ${access_token}`,
                 },
             });
+            toast.success('Thread Created Successfully!');
             console.log(response.data);
+            FetchAllThread(); 
+            
         } catch (error) {
             console.log(error);
+            toast.error('Failed to Create Thread. Please try again.');
         }
     };
 
@@ -47,7 +51,7 @@ const CreateThread = () => {
     }, []);
 
     return (
-        <div className="bg-white rounded-xl w-full lg:w-3/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">
+        <div className="bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">
             <form
                 onSubmit={HandleCreateThread}
                 className="bg-white rounded-2xl p-8 w-full space-y-4"

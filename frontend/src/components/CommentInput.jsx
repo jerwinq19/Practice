@@ -7,7 +7,7 @@ import { useState } from "react";
     thread is pasa mo naman yung nasa map mo na thread
 */
 
-const Comment = ({ authorID, threadID }) => {
+const CommentInput = ({ authorID, threadID, toast}) => {
   const [content, setContent] = useState("");
   const [isAnony, setAnony] = useState(false);
 
@@ -32,8 +32,11 @@ const Comment = ({ authorID, threadID }) => {
       });
       console.log(response.data);
       console.log("comment work!");
+      toast.success("Comment Posted Successfully!");
+      setContent("");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to post comment.");
     }
   };
 
@@ -74,7 +77,7 @@ const Comment = ({ authorID, threadID }) => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Write your comment..."
-            className="w-full h-28 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full h-28 border border-gray-300 rounded-lg p-3 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           ></textarea>
         </div>
 
@@ -91,4 +94,4 @@ const Comment = ({ authorID, threadID }) => {
   );
 };
 
-export default Comment;
+export default CommentInput;

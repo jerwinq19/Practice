@@ -1,11 +1,11 @@
 import './App.css'
 import {Routes, Route} from 'react-router-dom'
+import ProtectedRoute from './components/protectedRoutes'
 import Register from './pages/register'
 import Login from './pages/login'
 import Homepage from './pages/Homepage'
 import NotFound from './pages/NotFound'
-import CreateThread from './pages/CreateThread'
-import ProtectedRoute from './components/protectedRoutes'
+import ThreadView from './pages/ThreadView'
 
 const App = () => {
   return (
@@ -16,6 +16,11 @@ const App = () => {
         <Route path='/home' element={
           <ProtectedRoute>
             <Homepage />
+          </ProtectedRoute>
+        }/>
+        <Route path='/thread/:threadID' element={
+          <ProtectedRoute>
+            <ThreadView />
           </ProtectedRoute>
         }/>
         <Route path='*' element={<NotFound />}/>
