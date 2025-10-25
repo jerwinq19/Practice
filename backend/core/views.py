@@ -51,7 +51,7 @@ class ListCreateUserThread(generics.ListCreateAPIView):
         api/thread/
         retrive all the threads created by the all user
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  
     
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
@@ -62,7 +62,7 @@ class ThreadDetailView(generics.RetrieveUpdateDestroyAPIView):
         api/thread/<int:pk>/
         retrive, update, and delete thread via pk (primary key)
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     serializer_class = ThreadSerializer
     queryset = Thread.objects.all()
@@ -73,7 +73,7 @@ class CategoryViewThread(generics.ListAPIView):
         api/thread/<str:category>/
         retrives all the thread with the same category
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     lookup_field = 'category'
     serializer_class = ThreadSerializer
@@ -96,7 +96,7 @@ class ListCreateComment(generics.ListCreateAPIView):
         api/comment/<int:pk>/ or api/comment/  
         list and create comments
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     serializer_class = CommentSerializers
     queryset = Comment.objects.all()
