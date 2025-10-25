@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
 
-const Category = ({setThreads}) => {
+const Category = ({setThreads, setNext, setPrev}) => {
   const [category, setCategory] = useState("ALL");
 
    const fetchCategoryThread = async () => {
@@ -14,9 +14,11 @@ const Category = ({setThreads}) => {
                     Authorization: `Bearer ${access_token}`,
                 },
             });
-            console.log(response.data.results)
+            console.log(response.data)
             console.log('TAMA NAMAN AH')
             setThreads(response.data.results)
+            setNext(response.data.next)
+            setPrev(response.data.prev)
         } catch (error) {
             console.log('test')
             console.log(error);
