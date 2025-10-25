@@ -56,7 +56,7 @@ const CreateThread = ({ toast, FetchAllThread }) => {
                 onSubmit={HandleCreateThread}
                 className="bg-white rounded-2xl p-8 w-full space-y-4"
             >
-                <h2 className="text-lg font-semibold text-gray-800 text-center">
+                <h2 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text text-center">
                     Create New Thread
                 </h2>
 
@@ -116,7 +116,7 @@ const CreateThread = ({ toast, FetchAllThread }) => {
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors"
+                    className="w-5/5 self-center text-white py-2 rounded-md bg-linear-to-r from-cyan-500 to-blue-900 disabled:bg-gray-400 font-bold text-xl"
                 >
                     Submit
                 </button>

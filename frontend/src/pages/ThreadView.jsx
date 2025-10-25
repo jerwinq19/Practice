@@ -33,7 +33,7 @@ const ThreadView = () => {
   return (
     <div className="w-screen h-screen relative flex flex-col lg:flex-row-reverse justify-center items-center">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="w-screen h-screen bg-gray-200 overflow-y-auto flex flex-col gap-2 py-20 items-center">
+      <div className="w-screen h-screen bg-gray-200 overflow-y-auto flex flex-col gap-2 lg:py-20 items-center">
         <div
           key={1}
           className=" bg-white rounded-xl w-full lg:w-3/5 p-5  border-2 border-gray-300 shadow-xl flex flex-col gap-5"
