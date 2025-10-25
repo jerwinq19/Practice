@@ -1,14 +1,15 @@
 
 const PaginatedButton = ({PrevLink, NextLink, PrevDis, NextDis}) => {
     return (
-        <div>
-            <nav aria-label="Page navigation example">
-                <ul className="inline-flex -space-x-px text-sm">
+        <div className="w-full">
+            <nav aria-label="Page navigation example" className="flex justify-center">
+                <ul className="w-full lg:w-2/5 p-5 flex flex-row justify-between">
                     <li>
-                        <button onClick={PrevLink} disabled={PrevDis}className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</button>
+                        <button onClick={PrevLink} disabled={PrevDis}className={` transition-all rounded px-2 py-1 flex flex-row items-center  ${PrevDis ? 'bg-gray-300 text-gray-500': 'bg-white text-cyan-700 hover:scale-120'}`}>
+                        Previous</button>
                     </li>
                     <li>
-                        <button onClick={NextLink} disabled={NextDis} className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
+                        <button onClick={NextLink} disabled={NextDis} className={` transition-all rounded px-2 py-1 flex flex-row items-center  ${NextDis ? 'bg-gray-300 text-gray-500': 'bg-white text-cyan-700 hover:scale-120'}`}>Next</button>
                     </li>
                 </ul>
             </nav>

@@ -7,19 +7,14 @@ import CreateThread from "./CreateThread";
 import ThreadPost from "../components/ThreadPost";
 import toast, { Toaster } from "react-hot-toast";
 import PaginatedButton from "../components/paginatedButton";
-
-/*
-  Todos: gawan mo UI for better looking nigga!
-*/
-
-// ALWAYS PASS THE ACCESS TOKEN NIGGA!
+import Category from "../components/Category";
 
 const Homepage = () => {
   const [threads, setThreads] = useState([]);
   const [user, setUser] = useState([]);
   const [next, setNext] = useState(null)
   const [prev, setPrev] = useState(null)
-  const [notif, setNotif] = useState('')
+  const [category, setCategory] = useState('')
 
   // fetcher
   const FetchAllThread = async (url = "thread/") => {
@@ -53,10 +48,11 @@ const Homepage = () => {
       <Toaster position="top-center" reverseOrder={false} />
       <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-2 p-2 pt-5 items-center scroll-py-500">
         <CreateThread  toast={toast} FetchAllThread={FetchAllThread}/>
-          <PaginatedButton NextLink={() => FetchAllThread(next)} PrevLink={() => FetchAllThread(prev)} PrevDis={prev ? false : true} NextDis={next ? false : true}/>
+        <Category setThreads={setThreads}/>
         {threads.length > 0 ? (threads.map((thread,key) => {
           return <ThreadPost key={key} thread={thread} user={user} toast={toast} token={localStorage.getItem('access_token')}/>
-        })) : <h1 className="text-3xl text-center font-bold mt-30">No Threads.<span className="font-normal text-gray-500 "><br/>Create a thread and share your rants away<br/>in a safe community</span></h1>}
+        })) : <h1 className="text-3xl text-center font-bold mt-30 mb-30">No Threads.<span className="font-normal text-gray-500"><br/>Create a thread and share your rants away<br/>in a safe community</span></h1>}
+        {threads.length > 0 && <PaginatedButton NextLink={() => FetchAllThread(next)}PrevLink={() => FetchAllThread(prev)} PrevDis={prev ? false : true} NextDis={next ? false : true}/>}
       </div>
       <LogoutButton toast={toast}/>
     </div>
