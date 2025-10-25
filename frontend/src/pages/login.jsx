@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import LogoutButton from "../components/logoutButton";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const {
@@ -19,15 +19,18 @@ const Login = () => {
       // store the jwt access and refresh token to the local storage
       localStorage.setItem("access_token", res.data.access);
       localStorage.setItem("refresh_token", res.data.refresh);
-      navigate("/home");
+      toast.success("Login Successful!");
+      setTimeout(() => navigate("/home"), 1000);
     } catch (error) {
       console.log(error);
+      toast.error("Login Failed! Please check your credentials.");
       setError("root", { message: "Invalid credentials, please try again" });
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-between">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           SIGN IN

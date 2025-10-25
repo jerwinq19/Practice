@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
   const {
@@ -19,16 +20,19 @@ const Register = () => {
       // 201 kasi create nigga
       if (response.status === 201) {
         console.log("it work");
-        navigate("/");
+        toast.success("Registration Successful! Redirecting to Login...");
+        setTimeout(() => navigate("/"), 1000);
       }
     } catch (error) {
       console.log(error);
+      toast.error("Registration Failed! Please try again.");
       setError("root", { message: "Registration failed, please try again" });
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-between">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center mb-2 mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           REGISTER
