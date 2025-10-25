@@ -5,6 +5,7 @@ import Comment from "./comment";
 const ThreadPost = ({user, thread, key}) => {
   const [view, setView] = useState(false);
   const [heart, setHeart] = useState(false);
+  const [comment, setComment] = useState(false);
 
   return (
     <div key={key} className=" bg-white rounded-xl w-full lg:w-3/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5">
@@ -29,7 +30,7 @@ const ThreadPost = ({user, thread, key}) => {
         <h1 className="text-xl">CATEGORY: <span className="font-bold">{thread.category}</span></h1>
       <div>
         <h1 className="font-bold text-xl">{thread.title}</h1>
-        <h1 className={view ? "" : "line-clamp-5 "}>
+        <h1 className={view ? "mt-2" : "line-clamp-5 mt-2"}>
           {thread.content}
         </h1>
       </div>
@@ -45,7 +46,9 @@ const ThreadPost = ({user, thread, key}) => {
 
           {/* COMMENT */}
           <div className="flex flex-row gap-1 items-center">
-          <button onClick={() => setHeart(true)}><img src="https://img.icons8.com/?size=100&id=38977&format=png&color=1A1A1A" alt="" className="w-5 h-5" /></button>  
+          {comment ? 
+          <button onClick={() => setComment(false)}><img src="https://img.icons8.com/?size=100&id=38977&format=png&color=1A1A1A" alt="" className="w-5 h-5" /></button>  :
+          <button onClick={() => setComment(true)}><img src="https://img.icons8.com/?size=100&id=38977&format=png&color=1A1A1A" alt="" className="w-5 h-5" /></button>}
           </div>
         </div>
 
@@ -64,7 +67,7 @@ const ThreadPost = ({user, thread, key}) => {
         </button>
       </div>
 
-      <Comment authorID={user.pk} threadID={thread.id} />
+      {comment &&<Comment authorID={user.pk} threadID={thread.id} />}
     </div>
   );
 };

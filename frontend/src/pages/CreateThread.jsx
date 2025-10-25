@@ -47,10 +47,10 @@ const CreateThread = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
+        <div className="bg-white rounded-xl w-full lg:w-3/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">
             <form
                 onSubmit={HandleCreateThread}
-                className="bg-white shadow-md rounded-2xl p-8 w-full max-w-md space-y-4"
+                className="bg-white rounded-2xl p-8 w-full space-y-4"
             >
                 <h2 className="text-lg font-semibold text-gray-800 text-center">
                     Create New Thread
@@ -84,7 +84,7 @@ const CreateThread = () => {
                 />
 
                     <h1>Post As</h1>
-                <div className="flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div className="flex flex-row sm:flex-row items-start sm:items-center gap-3">
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
