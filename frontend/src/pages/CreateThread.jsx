@@ -43,7 +43,7 @@ const CreateThread = () => {
             const data = await FetchCurrentUser()
             setUser(data)
         }
-        caller
+        caller()
     }, []);
 
     return (

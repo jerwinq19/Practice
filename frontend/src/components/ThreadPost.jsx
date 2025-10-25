@@ -11,7 +11,7 @@ const ThreadPost = ({user, thread, key}) => {
     <div key={key} className=" bg-white rounded-xl w-full lg:w-3/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5">
       <div className="flex flex-row gap-3 justify-between items-center">
         <div className="flex flex-row gap-3 items-center">
-          <div className="bg-blue-500 w-10 h-10 rounded-full"></div>
+          <img src="https://img.icons8.com/?size=100&id=7819&format=png&color=000000" alt="" className="w-10 h-10"/>
           <h1 className="text-1xl font-bold text-gray-800">{thread.author_name}</h1>
         </div>
 
@@ -58,7 +58,7 @@ const ThreadPost = ({user, thread, key}) => {
             setView((prev) => !prev);
           }}
         >
-          View Post{" "}
+          View Thread{" "}
           <img
             src="https://img.icons8.com/?size=100&id=39969&format=png&color=1A1A1A"
             alt="arrow"
