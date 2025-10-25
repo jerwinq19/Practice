@@ -134,10 +134,13 @@ const Register = () => {
         >
           {isSubmitting ? "Loading..." : "Submit"}
         </button>
-        <p className="text-red-600 text-xs mb-5">{errors.root?.message}</p>
+        {errors.root && <p className="text-red-600 text-xs"><img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>{errors.root?.message}</p>}
       </form>
 
-      <h1 className="text-xs md:text-sm">
+      <h1 className="text-xs md:text-sm mt-5">
         Already have an account ?{" "}
         <Link to="/" className="text-blue-500">
           {" "}
