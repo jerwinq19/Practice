@@ -17,7 +17,7 @@ const CreateThread = () => {
 
     const HandleCreateThread = async (e) => {
         e.preventDefault();
-        console.log(localStorage.getItem('access_token'));
+        // console.log(localStorage.getItem('access_token'));
         const data = {
             category: category,
             author: user.pk, // mahalaga to para ma determine nung backend kung kanina naka pangalang yung thread same sa comments
@@ -25,6 +25,9 @@ const CreateThread = () => {
             content: content,
             is_annony: isAnony,
         };
+
+        // console.log(category)
+        console.log(data)
         try {
             const access_token = localStorage.getItem('access_token');
             const response = await axiosInstance.post('thread/', data, {
@@ -34,6 +37,7 @@ const CreateThread = () => {
             });
             console.log(response.data);
         } catch (error) {
+            console.log('test')
             console.log(error);
         }
     };
@@ -43,7 +47,7 @@ const CreateThread = () => {
             const data = await FetchCurrentUser()
             setUser(data)
         }
-        caller
+        caller()
     }, []);
 
     return (

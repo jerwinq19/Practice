@@ -25,7 +25,6 @@ const Homepage = () => {
         },
       });
       setThreads(response.data);
-      console.log(response.data);
       console.log("it work!");
     } catch (error) {
       console.log(error);
