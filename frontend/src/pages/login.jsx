@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import LogoutButton from "../components/logoutButton";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const {
@@ -14,24 +14,24 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formSubmit = async (data) => {
-    console.log(data)
     try {
-      const res = await axiosInstance.post('token/', data)
-      console.log(res.data)
+      const res = await axiosInstance.post("token/", data);
       // store the jwt access and refresh token to the local storage
-      localStorage.setItem('access_token', res.data.access)
-      localStorage.setItem('refresh_token', res.data.refresh)
-      navigate('/home')
+      localStorage.setItem("access_token", res.data.access);
+      localStorage.setItem("refresh_token", res.data.refresh);
+      toast.success("Login Successful!");
+      setTimeout(() => navigate("/home"), 1000);
+    } catch (error) {
+      console.log(error);
+      toast.error("Login Failed! Please check your credentials.");
+      setError("root", { message: "Invalid credentials, please try again" });
     }
-    catch (error) {
-      console.log(error)
-    }
-    console.log('dasdsa')
   };
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center">
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className="flex flex-col items-center mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           SIGN IN
         </h1>
@@ -50,7 +50,15 @@ const Login = () => {
           placeholder="Username"
           {...register("username", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs m-0">{errors.username?.message}</p>
+        {errors.username && (
+          <p className="text-red-600 text-xs m-0">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.username?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
@@ -58,7 +66,15 @@ const Login = () => {
           placeholder="Password"
           {...register("password", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs">{errors.password?.message}</p>
+        {errors.password && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.password?.message}
+          </p>
+        )}
 
         <button
           disabled={isSubmitting}
@@ -66,16 +82,23 @@ const Login = () => {
         >
           {isSubmitting ? "Loading..." : "Login"}
         </button>
-        <p className="text-red-600 text-xs mb-5">{errors.root?.message}</p>
+        {errors.root && (
+          <p className="text-red-600 text-xs mb-5">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.root?.message}
+          </p>
+        )}
       </form>
 
-      <h1 className="text-xs md:text-sm">
+      <h1 className="text-xs md:text-sm mt-5">
         Don't have an account?{" "}
         <Link to="/register" className="text-blue-500">
           Register Here
         </Link>
       </h1>
-
     </div>
   );
 };
