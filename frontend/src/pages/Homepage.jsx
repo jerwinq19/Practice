@@ -78,13 +78,16 @@ const Homepage = () => {
     //   </div>
     // </div>
 
-    <div className=" w-screen h-screen1 bg-gray-200 flex flex-row">
-      <div className="w-screen flex flex-col gap-5 p-2 pt-5  items-center">
-        <ThreadPost user={1} />
-        <ThreadPost user={2} />
-        <ThreadPost user={3} />
-        <ThreadPost user={4} />
+    <div className=" w-screen h-screen bg-gray-200 flex flex-col">
+      <div className="w-screen flex flex-col gap-2 p-2 pt-5 items-center">
+        <CreateThread />
+        {threads ? (threads.map((thread,key) => {
+          return <ThreadPost key={key} thread={thread} user={user} />
+        })) : <h1>No Threads.</h1>}
+
       </div>
+
+      <LogoutButton />
     </div>
   );
 };

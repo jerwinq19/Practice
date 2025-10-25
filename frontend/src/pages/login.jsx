@@ -14,10 +14,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formSubmit = async (data) => {
-    console.log(data);
     try {
       const res = await axiosInstance.post("token/", data);
-      console.log(res.data);
       // store the jwt access and refresh token to the local storage
       localStorage.setItem("access_token", res.data.access);
       localStorage.setItem("refresh_token", res.data.refresh);
@@ -92,7 +90,7 @@ const Login = () => {
         )}
       </form>
 
-      <h1 className="text-xs md:text-sm">
+      <h1 className="text-xs md:text-sm mt-5">
         Don't have an account?{" "}
         <Link to="/register" className="text-blue-500">
           Register Here
