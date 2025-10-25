@@ -62,7 +62,7 @@ class ThreadDetailView(generics.RetrieveUpdateDestroyAPIView):
         api/thread/<int:pk>/
         retrive, update, and delete thread via pk (primary key)
     '''
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     serializer_class = ThreadSerializer
     queryset = Thread.objects.all()
@@ -73,7 +73,7 @@ class CategoryViewThread(generics.ListAPIView):
         api/thread/<str:category>/
         retrives all the thread with the same category
     '''
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     lookup_field = 'category'
     serializer_class = ThreadSerializer
@@ -126,7 +126,7 @@ class EditDeleteComment(generics.RetrieveUpdateDestroyAPIView):
         retrive via pk, Edit via pk, and delete via pk
     '''
     
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     serializer_class = CommentSerializers
     queryset = Comment.objects.all()
