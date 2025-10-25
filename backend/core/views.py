@@ -27,6 +27,7 @@ class LogoutView(APIView):
             refresh_token = request.data.get('refresh_token')
             if not refresh_token:
                 return Response({"message": "No Refresh token provided"}, status=status.HTTP_400_BAD_REQUEST)
+            print("hello world")
             token = RefreshToken(str(refresh_token))
             token.blacklist()
             return Response({"message": "Successfully log out."}, status=status.HTTP_200_OK)

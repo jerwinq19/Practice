@@ -26,10 +26,9 @@ const CreateThread = ({ toast, FetchAllThread }) => {
             is_annony: isAnony,
         };
 
-        // console.log(category)
         console.log(data)
         try {
-            const access_token = localStorage.getItem('access_token');
+            const access_token = await localStorage.getItem('access_token');
             const response = await axiosInstance.post('thread/', data, {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
@@ -70,7 +69,7 @@ const CreateThread = ({ toast, FetchAllThread }) => {
                     className="w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
                 >
                     <option value="">Select a category</option>
-                    <option value="PERSONAL PROBLEM">Personal Problem</option>
+                    <option value="PERSONAL PROBLEMS">Personal Problems</option>
                     <option value="FAMILY PROBLEMS">Family Problems</option>
                     <option value="DEPRESSION">Depression</option>
                 </select>

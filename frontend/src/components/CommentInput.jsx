@@ -1,5 +1,6 @@
 import axiosInstance from "../utils/axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 /*
     Comment components
@@ -24,18 +25,23 @@ const CommentInput = ({ authorID, threadID, toast}) => {
       content: content,
       is_annony: isAnony,
     };
+
+    if (!data) return
+
     try {
       const response = await axiosInstance.post("comment/", data, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response.data);
       console.log("comment work!");
       toast.success("Comment Posted Successfully!");
       setContent("");
     } catch (error) {
-      console.log(error);
+      if (error.status === 403) {
+        return toast.error("You reached you comment limit.")
+      }
+
       toast.error("Failed to post comment.");
     }
   };

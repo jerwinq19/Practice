@@ -26,7 +26,7 @@ const ThreadView = () => {
       // remove the json web token
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
-      toast.success("Logged out successfully!");s
+      toast.success("Logged out successfully!");
       setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       toast.error("Failed to log out. Please try again.");
@@ -138,7 +138,7 @@ const ThreadView = () => {
           </div>
 
           {comment && (
-            <CommentInput authorID={null} threadID={null} toast={toast} />
+            <CommentInput authorID={state.author} threadID={state.id} toast={toast} />
           )}
           <div className="w-full p-5 border-t-2 border-gray-300 flex flex-col gap-10 items-center">
             {state.comments.map((data, key) => (
