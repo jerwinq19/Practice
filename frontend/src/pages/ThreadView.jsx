@@ -1,14 +1,18 @@
 import axiosInstance from "../utils/axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import CommentPost from "../components/CommentPost";
 import CommentInput from "../components/CommentInput";
 
 const ThreadView = () => {
+  const [thread, setThread] = useState([])
   const [heart, setHeart] = useState(false);
   const [comment, setComment] = useState(false);
   const navigate = useNavigate();
+  const { state } = useLocation() // this gets the data when you redirect from thread post
+
+  console.log(state)
 
   // Log out handler
   const LogoutHandler = async () => {
@@ -22,7 +26,7 @@ const ThreadView = () => {
       // remove the json web token
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
-      toast.success("Logged out successfully!");
+      toast.success("Logged out successfully!");s
       setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       toast.error("Failed to log out. Please try again.");
@@ -30,12 +34,13 @@ const ThreadView = () => {
     }
   };
 
+
   return (
     <div className="w-screen h-screen relative flex flex-col lg:flex-row-reverse justify-center items-center">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="w-screen h-screen bg-gray-200 overflow-y-auto flex flex-col gap-2 lg:py-20 items-center">
         <div
-          key={1}
+          key={state.id}
           className=" bg-white rounded-xl w-full lg:w-3/5 p-5  border-2 border-gray-300 shadow-xl flex flex-col gap-5"
         >
           <div className="flex flex-row gap-3 justify-between items-center">
@@ -45,7 +50,7 @@ const ThreadView = () => {
                 alt=""
                 className="w-10 h-10"
               />
-              <h1 className="text-1xl font-bold text-gray-800">John Doe</h1>
+              <h1 className="text-1xl font-bold text-gray-800">{state.author_name}</h1>
             </div>
 
             <button className="group relative rounded-full p-1 border border-gray-300 pointer-cursor">
@@ -61,35 +66,14 @@ const ThreadView = () => {
             </button>
           </div>
           <h1 className="text-xl">
-            CATEGORY: <span className="font-bold">DEPRESSION</span>
+            CATEGORY: <span className="font-bold">{state.category}</span>
           </h1>
           <div>
             <h1 className="font-bold text-xl">
-              Lintek na Hackathon Project ito.
+              {state.title}
             </h1>
             <h1 className="mt-2">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias
-              voluptatem voluptate impedit consequatur laudantium necessitatibus
-              totam commodi repellendus in dignissimos! Nostrum aspernatur esse
-              animi recusandae quidem commodi modi adipisci excepturi! Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Aliquam, vel
-              illum a consequuntur ipsa repudiandae! Cum ab odit sapiente
-              laudantium officiis ducimus, dicta assumenda in nisi, esse ratione
-              repudiandae tempora. Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Qui saepe, eos repellendus id voluptatum dicta
-              laboriosam. Corporis animi totam, minima hic minus aliquam iure
-              sapiente ad dignissimos laboriosam a voluptates.Lorem ipsum dolor
-              sit, amet consectetur adipisicing elit. Alias voluptatem voluptate
-              impedit consequatur laudantium necessitatibus totam commodi
-              repellendus in dignissimos! Nostrum aspernatur esse animi
-              recusandae quidem commodi modi adipisci excepturi! Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Aliquam, vel illum a
-              consequuntur ipsa repudiandae! Cum ab odit sapiente laudantium
-              officiis ducimus, dicta assumenda in nisi, esse ratione
-              repudiandae tempora. Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Qui saepe, eos repellendus id voluptatum dicta
-              laboriosam. Corporis animi totam, minima hic minus aliquam iure
-              sapiente ad dignissimos laboriosam a voluptates.
+              {state.content}
             </h1>
           </div>
           <div className="border-t-2 flex flex-row gap-3 pt-2 justify-between border-gray-300">
@@ -134,7 +118,7 @@ const ThreadView = () => {
                     />
                   </button>
                 )}
-                <p className="text-gray-500 text-xs">3 Comments</p>
+                <p className="text-gray-500 text-xs">{state.comments.lenght}</p>
               </div>
             </div>
 
@@ -157,9 +141,9 @@ const ThreadView = () => {
             <CommentInput authorID={null} threadID={null} toast={toast} />
           )}
           <div className="w-full p-5 border-t-2 border-gray-300 flex flex-col gap-10 items-center">
-            <CommentPost />
-            <CommentPost />
-            <CommentPost />
+            {state.comments.map((data, key) => (
+              <CommentPost commentData={data} key={key}/>
+            ))}
           </div>
         </div>
       </div>

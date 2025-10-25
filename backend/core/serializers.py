@@ -44,7 +44,6 @@ class CommentSerializers(serializers.ModelSerializer):
             return "Anonymous"
         return obj.author.username
     
-
 # Threaad serializer
 class ThreadSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()

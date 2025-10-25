@@ -2,11 +2,25 @@ import React from "react";
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axios";
+import ThreadView from "../pages/ThreadView";
 
-const ThreadPost = ({user, thread, toast}) => {
+const ThreadPost = ({user, thread, toast, token}) => {
   const [heart, setHeart] = useState(false);
   const [comment, setComment] = useState(false);
   const navigate = useNavigate();
+
+
+  const ThreadDetailViewHandler = async () => {
+    const response = await axiosInstance.get(`thread/${thread.id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    navigate(`/thread/${thread.id}/`, {
+      state: response.data
+    })
+  }
 
 
   return (
@@ -57,7 +71,7 @@ const ThreadPost = ({user, thread, toast}) => {
 
         <button
           className="text-sm hover:bg-gray-300 rounded px-2 py-1 flex flex-row items-center"
-          onClick={() => {navigate(`/thread/${thread.id}`)}}
+          onClick={() => ThreadDetailViewHandler()}
         >
           View Thread{" "}
           <img
