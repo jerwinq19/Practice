@@ -1,11 +1,9 @@
 import axiosInstance from "../utils/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LogoutButton from '../components/logoutButton';
 import FetchCurrentUser from "../utils/userInfo";
 
 const CreateThread = ({ toast, FetchAllThread }) => {
-    const [user, setUser] = useState([]); // mahalaga
-
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -20,7 +18,6 @@ const CreateThread = ({ toast, FetchAllThread }) => {
         // console.log(localStorage.getItem('access_token'));
         const data = {
             category: category,
-            author: user.pk, // mahalaga to para ma determine nung backend kung kanina naka pangalang yung thread same sa comments
             title: title,
             content: content,
             is_annony: isAnony,
@@ -44,14 +41,6 @@ const CreateThread = ({ toast, FetchAllThread }) => {
             toast.error('Failed to Create Thread. Please try again.');
         }
     };
-
-    useEffect(() => {
-        const caller = async () => {
-            const data = await FetchCurrentUser()
-            setUser(data)
-        }
-        caller()
-    }, []);
 
     return (
         <div className="bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">

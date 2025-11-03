@@ -34,10 +34,10 @@ class UserSerializers(serializers.ModelSerializer):
 # comment serializer
 class CommentSerializers(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = Comment
-        fields = ('author','author_name', 'thread', 'content', 'timestamp', 'is_annony')
+        fields = ('id','author','thread','author_name', 'content', 'timestamp', 'is_annony')
+        read_only_fields = ['author', 'thread']
         
     def get_author_name(self, obj):
         if obj.is_annony:
@@ -52,7 +52,8 @@ class ThreadSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Thread
-        fields = ('id', 'category','author','author_name','title', 'content', 'comments', 'is_annony')
+        fields = ('id','author','category','author_name','title', 'content', 'comments', 'is_annony')
+        read_only_fields = ['id','author', 'author_name']  
         
     def get_author_name(self, obj):
         if obj.is_annony:

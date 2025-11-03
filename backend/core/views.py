@@ -52,18 +52,21 @@ class ListCreateUserThread(generics.ListCreateAPIView):
         api/thread/
         retrive all the threads created by the all user
     '''
-    # permission_classes = [IsAuthenticated]    
+    permission_classes = [IsAuthenticated]    
     
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
-
+    
+    def perform_create(self, serializer):
+        serializer.save(author = self.request.user)
+        
 class ThreadDetailView(generics.RetrieveUpdateDestroyAPIView):
     '''
         THIS ENDPOINT
         api/thread/<int:pk>/
         retrive, update, and delete thread via pk (primary key)
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     serializer_class = ThreadSerializer
     queryset = Thread.objects.all()
@@ -74,7 +77,7 @@ class CategoryViewThread(generics.ListAPIView):
         api/thread/<str:category>/
         retrives all the thread with the same category
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     lookup_field = 'category'
     serializer_class = ThreadSerializer
@@ -91,34 +94,33 @@ class CategoryViewThread(generics.ListAPIView):
     COMMENTS VIEWS
 '''
 
-class ListCreateComment(generics.ListCreateAPIView):
+class ListCreateComment(generics.ListAPIView):
     '''
         THIS ENDPOINT 
         api/comment/<int:pk>/ or api/comment/  
         list and create comments
     '''
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializers
+    queryset = Comment.objects.all()
+
+class DetailCommentView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     
     serializer_class = CommentSerializers
     queryset = Comment.objects.all()
     
-    def create(self, request, *args, **kwargs):
-        '''
-            counts user comments if it exceeds 3 it will block it from commenting
-        '''
-        if Comment.objects.filter(author=self.request.user, thread=request.data.get('thread')).count() >= 3:
-            return Response({"message": "Limit reached."}, status=status.HTTP_403_FORBIDDEN)
-        
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        
-        return Response({
-            "message": "Comment Created!"
-        },  status=status.HTTP_201_CREATED)
+    
+
+class CreateComment(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    serializer_class = CommentSerializers
+    queryset = Comment.objects.all()
     
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        thread_id = self.kwargs['pk']
+        serializer.save(author=self.request.user, thread_id=thread_id)
 
 class EditDeleteComment(generics.RetrieveUpdateDestroyAPIView):
     '''
@@ -126,8 +128,6 @@ class EditDeleteComment(generics.RetrieveUpdateDestroyAPIView):
         api/comment/<int:pk>
         retrive via pk, Edit via pk, and delete via pk
     '''
-    
-    # permission_classes = [IsAuthenticated]
-    
+    permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializers
     queryset = Comment.objects.all()

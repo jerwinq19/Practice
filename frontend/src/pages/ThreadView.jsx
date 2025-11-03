@@ -12,13 +12,11 @@ const ThreadView = () => {
   const navigate = useNavigate();
   const { state } = useLocation() // this gets the data when you redirect from thread post
 
-  console.log(state)
-
   // Log out handler
   const LogoutHandler = async () => {
     const refresh_token = localStorage.getItem("refresh_token");
     try {
-      console.log(refresh_token);
+      // console.log(refresh_token);
       const response = await axiosInstance.post("logout/", {
         refresh_token: refresh_token,
       });
