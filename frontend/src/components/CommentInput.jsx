@@ -20,7 +20,6 @@ const CommentInput = ({ authorID, threadID, toast}) => {
     e.preventDefault();
     const access_token = localStorage.getItem("access_token");
     const data = {
-      author: authorID,
       thread: threadID,
       content: content,
       is_annony: isAnony,
@@ -29,12 +28,12 @@ const CommentInput = ({ authorID, threadID, toast}) => {
     if (!data) return
 
     try {
-      const response = await axiosInstance.post("comment/", data, {
+      const response = await axiosInstance.post(`comment/create/${threadID}/`, data, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log("comment work!");
+      console.log(response.data)
       toast.success("Comment Posted Successfully!");
       setContent("");
     } catch (error) {
