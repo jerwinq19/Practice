@@ -12,7 +12,7 @@ const ThreadView = () => {
   const navigate = useNavigate();
   const { state } = useLocation() // this gets the data when you redirect from thread post
 
-  console.log(state)
+
 
   // Log out handler
   const LogoutHandler = async () => {
