@@ -12,11 +12,6 @@ const ThreadView = () => {
   const navigate = useNavigate();
   const { state } = useLocation() // this gets the data when you redirect from thread post
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 149792c3ea0e4d6227cf64d0efddefcebacdfb17
   // Log out handler
   const LogoutHandler = async () => {
     const refresh_token = localStorage.getItem("refresh_token");
