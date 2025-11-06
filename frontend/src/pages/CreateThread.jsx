@@ -1,10 +1,15 @@
 import axiosInstance from "../utils/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LogoutButton from '../components/logoutButton';
+<<<<<<< HEAD
+=======
 import FetchCurrentUser from "../utils/userInfo";
+import { useAuthContext } from "../utils/context";
+import { toast } from 'react-hot-toast'
 
 const CreateThread = () => {
-    const [user, setUser] = useState([]); // mahalaga
+    const { FetchAllThread } = useAuthContext()
+>>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
@@ -17,53 +22,53 @@ const CreateThread = () => {
 
     const HandleCreateThread = async (e) => {
         e.preventDefault();
-
+        // console.log(localStorage.getItem('access_token'));
         const data = {
             category: category,
-            author: user.pk, // mahalaga to para ma determine nung backend kung kanina naka pangalang yung thread same sa comments
             title: title,
             content: content,
             is_annony: isAnony,
         };
+
         try {
-            const access_token = localStorage.getItem('access_token');
+            const access_token = await localStorage.getItem('access_token');
             const response = await axiosInstance.post('thread/', data, {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
             });
+            toast.success('Thread Created Successfully!');
             console.log(response.data);
+            FetchAllThread(); 
+            
         } catch (error) {
+<<<<<<< HEAD
+            console.log(error.response.data.category[0]);
+            toast.error(error.response.data.category[0])
+=======
             console.log(error);
+>>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
+            toast.error('Failed to Create Thread. Please try again.');
         }
     };
 
-    useEffect(() => {
-        const caller = async () => {
-            const data = await FetchCurrentUser()
-            setUser(data)
-        }
-        caller
-    }, []);
-
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
-            <LogoutButton />
+        <div className="bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">
             <form
                 onSubmit={HandleCreateThread}
-                className="bg-white shadow-md rounded-2xl p-8 mt-6 w-full max-w-md space-y-4"
+                className="bg-white rounded-2xl p-8 w-full space-y-4"
             >
-                <h2 className="text-2xl font-semibold text-gray-800 text-center">
+                <h2 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text text-center">
                     Create New Thread
                 </h2>
 
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
                 >
                     <option value="">Select a category</option>
-                    <option value="PERSONAL PROBLEM">Personal Problem</option>
+                    <option value="PERSONAL PROBLEMS">Personal Problems</option>
                     <option value="FAMILY PROBLEMS">Family Problems</option>
                     <option value="DEPRESSION">Depression</option>
                 </select>
@@ -73,17 +78,19 @@ const CreateThread = () => {
                     placeholder="Title here"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
                 />
 
                 <textarea
                     placeholder="Write your thoughts here..."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                    className="
+                    w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all h-32 resize-none"
                 />
 
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <h1>Post As</h1>
+                <div className="flex flex-row sm:flex-row items-start sm:items-center gap-3">
                     <label className="flex items-center gap-2">
                         <input
                             type="radio"
@@ -93,7 +100,7 @@ const CreateThread = () => {
                             onChange={(e) => handleRadioChange(e.target.value)}
                             className="text-blue-600 focus:ring-blue-500"
                         />
-                        <span>Post as Anonymous</span>
+                        <span>Anonymous</span>
                     </label>
 
                     <label className="flex items-center gap-2">
@@ -105,13 +112,13 @@ const CreateThread = () => {
                             onChange={(e) => handleRadioChange(e.target.value)}
                             className="text-blue-600 focus:ring-blue-500"
                         />
-                        <span>Post as Yourself</span>
+                        <span>Yourself</span>
                     </label>
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors"
+                    className="w-5/5 self-center text-white py-2 rounded-md bg-linear-to-r from-cyan-500 to-blue-900 disabled:bg-gray-400 font-bold text-xl"
                 >
                     Submit
                 </button>

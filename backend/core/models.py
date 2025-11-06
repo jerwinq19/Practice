@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
-import uuid
 
 # custom user model
 class CustomUser(AbstractUser):
@@ -21,7 +20,6 @@ class Thread(models.Model):
     )
     
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='author')
-    slug = models.SlugField(default="", unique=True)
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=200)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
@@ -31,10 +29,6 @@ class Thread(models.Model):
     def __str__(self):
         return f"{self.author} - {self.category}"
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
     
 
 class Comment(models.Model):

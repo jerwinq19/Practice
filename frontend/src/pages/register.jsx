@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
   const {
@@ -14,22 +15,25 @@ const Register = () => {
 
   const formSubmit = async (data) => {
     try {
-      const response = await axiosInstance.post('user/', data)
-      console.log(response.data)
+      const response = await axiosInstance.post("user/", data);
+      console.log(response.data);
       // 201 kasi create nigga
-      if (response.status === 201) { 
+      if (response.status === 201) {
         console.log("it work");
-        navigate("/");
+        toast.success("Registration Successful! Redirecting to Login...");
+        setTimeout(() => navigate("/"), 1000);
       }
     } catch (error) {
       console.log(error);
+      toast.error("Registration Failed! Please try again.");
       setError("root", { message: "Registration failed, please try again" });
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center mb-2">
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className="flex flex-col items-center mb-2 mt-20">
         <h1 className="font-bold text-4xl mb-3 mt-5 bg-linear-to-r from-cyan-500 to-blue-900 text-transparent bg-clip-text">
           REGISTER
         </h1>
@@ -48,7 +52,15 @@ const Register = () => {
           placeholder="Username"
           {...register("username", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs m-0">{errors.username?.message}</p>
+        {errors.username && (
+          <p className="text-red-600 text-xs m-0">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.username?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
@@ -56,20 +68,37 @@ const Register = () => {
           placeholder="Password"
           {...register("password", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs">{errors.password?.message}</p>
+        {errors.password && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.password?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
           type="email"
           placeholder="Email"
           {...register("email", {
-            required: "This is required", pattern: {
+            required: "This is required",
+            pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "Invalid email address",
-            }
+            },
           })}
         />
-        <p className="text-red-600 text-xs">{errors.email?.message}</p>
+        {errors.email && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.email?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
@@ -77,7 +106,15 @@ const Register = () => {
           placeholder="First Name"
           {...register("first_name", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs">{errors.firstname?.message}</p>
+        {errors.first_name && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.first_name?.message}
+          </p>
+        )}
 
         <input
           className=" w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all"
@@ -85,7 +122,15 @@ const Register = () => {
           placeholder="Last Name"
           {...register("last_name", { required: "This is required" })}
         />
-        <p className="text-red-600 text-xs">{errors.lastname?.message}</p>
+        {errors.last_name && (
+          <p className="text-red-600 text-xs">
+            <img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>
+            {errors.last_name?.message}
+          </p>
+        )}
 
         <button
           disabled={isSubmitting}
@@ -93,12 +138,16 @@ const Register = () => {
         >
           {isSubmitting ? "Loading..." : "Submit"}
         </button>
-        <p className="text-red-600 text-xs mb-5">{errors.root?.message}</p>
+        {errors.root && <p className="text-red-600 text-xs"><img
+              src="https://img.icons8.com/?size=100&id=60673&format=png&color=FA5252"
+              className="inline mr-1 w-4 h-4"
+            ></img>{errors.root?.message}</p>}
       </form>
 
-      <h1 className="text-sm">
-        Already have an account?
+      <h1 className="text-xs md:text-sm mt-5">
+        Already have an account ?{" "}
         <Link to="/" className="text-blue-500">
+          {" "}
           Login Here
         </Link>
       </h1>

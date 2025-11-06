@@ -1,84 +1,107 @@
-import React from 'react'
-import LogoutButton from '../components/logoutButton'
-import { useState, useEffect } from 'react'
-import axiosInstance from '../utils/axios'
-import FetchCurrentUser from '../utils/userInfo' // always use this to get the user info may mga data kasing need dun
-import Comment from "../components/comment";
-
-/*
-  Todos: gawan mo UI for better looking nigga!
-*/
-
-
-// ALWAYS PASS THE ACCESS TOKEN NIGGA!
+import LogoutButton from "../components/logoutButton";
+<<<<<<< HEAD
+import { useState, useEffect } from "react";
+import axiosInstance from "../utils/axios";
+import Comment from "../components/CommentInput";
+=======
+// import Comment from "../components/CommentInput";
+>>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
+import CreateThread from "./CreateThread";
+import ThreadPost from "../components/ThreadPost";
+import toast, { Toaster } from "react-hot-toast";
+import PaginatedButton from "../components/paginatedButton";
+import Category from "../components/Category";
+<<<<<<< HEAD
+import ProfileButton from "../components/profileButton";
+import DashBoardButton from "../components/dashboardButton";
 
 const Homepage = () => {
-  const [threads, setThreads] = useState([])
-  const [user, setUser] = useState([])
+  const [threads, setThreads] = useState([]);
+  const [user, setUser] = useState([]);
+  const [next, setNext] = useState(null)
+  const [prev, setPrev] = useState(null)
+  const [category, setCategory] = useState('')
 
   // fetcher
-  const FetchAllThread = async () => {
-    const access_token = localStorage.getItem('access_token')
+  const FetchAllThread = async (url = "thread/") => {
+    const access_token = localStorage.getItem("access_token");
     try {
-      const response = await axiosInstance.get('thread/', {
+      const response = await axiosInstance.get(url, {
         headers: {
-          Authorization: `Bearer ${access_token}`
-        }
-      })
-      setThreads(response.data)
-      console.log(response.data)
-      console.log('it work!')
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      setThreads(response.data.results);
+      setNext(response.data.next)
+      setPrev(response.data.previous)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   useEffect(() => {
     const caller = async () => {
-      await FetchAllThread()
-      const data = await FetchCurrentUser()
-      setUser(data)
-    }
-    caller()
-  }, [])
+      await FetchAllThread();
+    };
+    caller();
+  }, []);
+
+=======
+import { useAuthContext, ContextProvider } from "../utils/context";
+
+const Homepage = () => {
+  const {
+     threads,
+     setThreads,
+     FetchAllThread,
+     next,
+     prev,
+     setNext,
+     setPrev, 
+     user,
+     setUser
+       } = useAuthContext();
+>>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-gray-50 shadow-lg rounded-2xl">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-800">Welcome, {user.username}</h1>
-        <p className="text-gray-600 mt-2">Here's your profile information:</p>
-
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-          <p className="text-gray-700"><span className="font-semibold">First Name:</span> {user.first_name}</p>
-          <p className="text-gray-700"><span className="font-semibold">Last Name:</span> {user.last_name}</p>
-          <p className="text-gray-700 col-span-2"><span className="font-semibold">Email:</span> {user.email}</p>
-        </div>
-
-        <div className="mt-6">
-          <LogoutButton />
-        </div>
+    <div className=" w-screen relative bg-gray-200 flex flex-col lg:flex-row-reverse">
+      <ProfileButton />
+      <DashBoardButton />
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-2 p-2 pt-5 items-center scroll-py-500">
+        <CreateThread  />
+        <Category />
+        {threads.length > 0 ? (
+          threads.map((thread, key) => {
+            return (
+              <ThreadPost
+                key={key}
+                thread={thread}                
+              />
+            );
+          })
+        ) : (
+          <h1 className="text-3xl text-center font-bold mt-30 mb-30">
+            No Threads.
+            <span className="font-normal text-gray-500">
+              <br />
+              Create a thread and share your rants away
+              <br />
+              in a safe community
+            </span>
+          </h1>
+        )}
+        {threads.length > 0 && (
+          <PaginatedButton
+            NextLink={() => FetchAllThread(next)}
+            PrevLink={() => FetchAllThread(prev)}
+            PrevDis={prev ? false : true}
+            NextDis={next ? false : true}
+          />
+        )}
       </div>
-
-      <div>
-        <h2 className="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">All Threads</h2>
-        <div className="space-y-6">
-          {threads.map((thread, key) => (
-            <div
-              key={key}
-              className="p-5 bg-white rounded-xl shadow hover:shadow-md transition-all border border-gray-200"
-            >
-              <h3 className="text-xl font-semibold text-blue-700">{thread.title}</h3>
-              <div className="flex flex-wrap text-sm text-gray-500 mt-1 gap-3">
-                <span>Author: <span className="font-medium text-gray-700">{thread.author_name}</span></span>
-                <span>Category: <span className="font-medium text-gray-700">{thread.category}</span></span>
-              </div>
-              <p className="mt-3 text-gray-700 leading-relaxed">{thread.content}</p>
-              <Comment authorID={user.pk} threadID={thread.id}/>
-            </div>
-          ))}
-        </div>
-      </div>
+      <LogoutButton toast={toast} />
     </div>
-  )
-}
+  );
+};
 
-export default Homepage
+export default Homepage;

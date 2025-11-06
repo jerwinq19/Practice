@@ -20,10 +20,10 @@ from .models import CustomUser, Comment, Thread
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('pk','username', 'password', 'email','first_name', 'last_name')
+        fields = ('pk','username', 'password', 'email','first_name', 'last_name', 'is_staff')
         extra_kwargs = {'password': {"write_only": True}}
-    
-    # automatically creates a user
+        read_only_fields = ['is_staff']
+            
     def create(self, validated_data):
         if CustomUser.objects.filter(username=validated_data['username']).exists():
             raise serializers.ValidationError("Username already exists.")
@@ -34,16 +34,16 @@ class UserSerializers(serializers.ModelSerializer):
 # comment serializer
 class CommentSerializers(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
-    
     class Meta:
         model = Comment
-        fields = ('author','author_name', 'thread', 'content', 'timestamp', 'is_annony')
+        fields = ('id','author','thread','author_name', 'content', 'timestamp', 'is_annony')
+        read_only_fields = ['author', 'thread']
         
     def get_author_name(self, obj):
         if obj.is_annony:
             return "Anonymous"
         return obj.author.username
-    
+
 
 # Threaad serializer
 class ThreadSerializer(serializers.ModelSerializer):
@@ -52,7 +52,8 @@ class ThreadSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Thread
-        fields = ('id', 'category','author','author_name','title', 'content', 'comments', 'is_annony')
+        fields = ('id','author','category','author_name','title', 'content', 'comments', 'is_annony')
+        read_only_fields = ['id','author', 'author_name']  
         
     def get_author_name(self, obj):
         if obj.is_annony:
