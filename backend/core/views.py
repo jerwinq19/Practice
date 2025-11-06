@@ -1,5 +1,5 @@
 # DRF 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import generics
@@ -10,6 +10,7 @@ from .serializers import ThreadSerializer, CommentSerializers
 from rest_framework_simplejwt.tokens import RefreshToken
 # models
 from .models import CustomUser, Comment, Thread
+from django.db.models import Avg, Count
 
 # log out 
 class LogoutView(APIView):
@@ -70,6 +71,24 @@ class ThreadDetailView(generics.RetrieveUpdateDestroyAPIView):
     
     serializer_class = ThreadSerializer
     queryset = Thread.objects.all()
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if self.request.user != instance.author and not self.request.user.is_staff:
+            return Response({"message": "You are not authorize to perform this action."}, status=status.HTTP_403_FORBIDDEN)
+        
+        serializer = self.get_serializer(instance, request.data)
+        serializer.is_valid()
+        serializer.save()
+        
+        return Response({"message": f"successfully updated"})
+
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if self.request.user != instance.author and not self.request.user.is_staff:
+            return Response({"message": "You are not authorize to perform this action."}, status=status.HTTP_403_FORBIDDEN)
+        instance.delete()
+        return Response({"message": f"successfully deleted '{instance.title}'"})
 
 class CategoryViewThread(generics.ListAPIView):
     '''
@@ -119,8 +138,7 @@ class CreateComment(generics.CreateAPIView):
     queryset = Comment.objects.all()
     
     def perform_create(self, serializer):
-        thread_id = self.kwargs['pk']
-        serializer.save(author=self.request.user, thread_id=thread_id)
+        serializer.save(author=self.request.user, thread_id=self.kwargs['pk'])
 
 class EditDeleteComment(generics.RetrieveUpdateDestroyAPIView):
     '''
@@ -131,3 +149,24 @@ class EditDeleteComment(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializers
     queryset = Comment.objects.all()
+
+class GetAllUserThread(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ThreadSerializer
+
+    def get_queryset(self):
+        return Thread.objects.filter(author=self.request.user)
+
+class DashBoardView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    
+    def get(self, request):
+        total_thread = Thread.objects.all().count()
+        total_user = CustomUser.objects.all().count()
+        category = Thread.objects.values('category').annotate(freq=Count('category')).order_by('-freq').first()
+
+        return Response({
+            "thread_count": total_thread,
+            "total_user": total_user,
+            "freq_category": category,
+        })

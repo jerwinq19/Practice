@@ -1,7 +1,6 @@
 import axiosInstance from "../utils/axios";
 import { useState } from "react";
 import LogoutButton from '../components/logoutButton';
-import FetchCurrentUser from "../utils/userInfo";
 
 const CreateThread = ({ toast, FetchAllThread }) => {
     const [category, setCategory] = useState('');
@@ -23,7 +22,6 @@ const CreateThread = ({ toast, FetchAllThread }) => {
             is_annony: isAnony,
         };
 
-        console.log(data)
         try {
             const access_token = await localStorage.getItem('access_token');
             const response = await axiosInstance.post('thread/', data, {
@@ -36,8 +34,8 @@ const CreateThread = ({ toast, FetchAllThread }) => {
             FetchAllThread(); 
             
         } catch (error) {
-            console.log('test')
-            console.log(error);
+            console.log(error.response.data.category[0]);
+            toast.error(error.response.data.category[0])
             toast.error('Failed to Create Thread. Please try again.');
         }
     };

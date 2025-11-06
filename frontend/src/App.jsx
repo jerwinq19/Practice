@@ -6,6 +6,9 @@ import Login from './pages/login'
 import Homepage from './pages/Homepage'
 import NotFound from './pages/NotFound'
 import ThreadView from './pages/ThreadView'
+import UserPorfile from './pages/ProfilePage'
+import DashboardView from './pages/Dashboard'
+
 
 const App = () => {
   return (
@@ -21,6 +24,16 @@ const App = () => {
         <Route path='/thread/:threadID' element={
           <ProtectedRoute>
             <ThreadView />
+          </ProtectedRoute>
+        }/>
+        <Route path='/profile/' element={
+          <ProtectedRoute>
+            <UserPorfile />
+          </ProtectedRoute>
+        }/>
+        <Route path='/dashboard/' element={
+          <ProtectedRoute>
+            <DashboardView />
           </ProtectedRoute>
         }/>
         <Route path='*' element={<NotFound />}/>

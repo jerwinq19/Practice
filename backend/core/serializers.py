@@ -20,10 +20,10 @@ from .models import CustomUser, Comment, Thread
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('pk','username', 'password', 'email','first_name', 'last_name')
+        fields = ('pk','username', 'password', 'email','first_name', 'last_name', 'is_staff')
         extra_kwargs = {'password': {"write_only": True}}
-    
-    # automatically creates a user
+        read_only_fields = ['is_staff']
+            
     def create(self, validated_data):
         if CustomUser.objects.filter(username=validated_data['username']).exists():
             raise serializers.ValidationError("Username already exists.")

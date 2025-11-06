@@ -44,6 +44,7 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(origReq);
             } catch (refreshErr) {
                 // refresh token also expired → logout
+                console.log(refreshErr)
                 localStorage.clear();
                 window.location.href = "/login";
             }

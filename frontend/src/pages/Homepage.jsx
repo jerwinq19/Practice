@@ -1,13 +1,14 @@
 import LogoutButton from "../components/logoutButton";
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axios";
-import FetchCurrentUser from "../utils/userInfo"; // always use this to get the user info may mga data kasing need dun
 import Comment from "../components/CommentInput";
 import CreateThread from "./CreateThread";
 import ThreadPost from "../components/ThreadPost";
 import toast, { Toaster } from "react-hot-toast";
 import PaginatedButton from "../components/paginatedButton";
 import Category from "../components/Category";
+import ProfileButton from "../components/profileButton";
+import DashBoardButton from "../components/dashboardButton";
 
 const Homepage = () => {
   const [threads, setThreads] = useState([]);
@@ -35,8 +36,6 @@ const Homepage = () => {
   useEffect(() => {
     const caller = async () => {
       await FetchAllThread();
-      const data = await FetchCurrentUser();
-      setUser(data);
     };
     caller();
   }, []);
@@ -44,6 +43,8 @@ const Homepage = () => {
 
   return (
     <div className=" w-screen relative bg-gray-200 flex flex-col lg:flex-row-reverse">
+      <ProfileButton />
+      <DashBoardButton />
       <Toaster position="top-center" reverseOrder={false} />
       <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-2 p-2 pt-5 items-center scroll-py-500">
         <CreateThread toast={toast} FetchAllThread={FetchAllThread} />

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
-import uuid
 
 # custom user model
 class CustomUser(AbstractUser):
