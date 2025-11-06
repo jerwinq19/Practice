@@ -23,6 +23,18 @@ const ThreadPost = ({user, thread, toast, token}) => {
   }
 
 
+  const handleDeleteThread = () => {
+    console.log(thread.id)
+    console.log(thread.title)
+    console.log(thread.author_name)
+
+    // const respose = await axiosInstance.delete(`thread/${thread.id}/`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // })
+  }
+
   return (
     <div key={thread.id} className=" bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5">
       <div className="flex flex-row gap-3 justify-between items-center">
@@ -39,7 +51,7 @@ const ThreadPost = ({user, thread, toast, token}) => {
           />
           <div className="absolute top-full right-0 rounded-lg p-3 mt-1 shadow-md scale-y-0 group-focus:scale-y-100 origin-top bg-white border border-gray-300 flex flex-col gap-2">
             <div className="hover:bg-gray-300 rounded px-4">Edit</div>
-            <div className="hover:bg-gray-300 rounded px-4">Delete</div>
+            <div className="hover:bg-gray-300 rounded px-4" onClick={handleDeleteThread}>Delete</div>
           </div>
         </button>
       </div>

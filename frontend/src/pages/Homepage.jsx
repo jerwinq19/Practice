@@ -2,12 +2,13 @@ import LogoutButton from "../components/logoutButton";
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axios";
 import FetchCurrentUser from "../utils/userInfo"; // always use this to get the user info may mga data kasing need dun
-import Comment from "../components/CommentInput";
+// import Comment from "../components/CommentInput";
 import CreateThread from "./CreateThread";
 import ThreadPost from "../components/ThreadPost";
 import toast, { Toaster } from "react-hot-toast";
 import PaginatedButton from "../components/paginatedButton";
 import Category from "../components/Category";
+import { useAuthContext, ContextProvider } from "../utils/context";
 
 const Homepage = () => {
   const [threads, setThreads] = useState([]);

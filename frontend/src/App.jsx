@@ -6,12 +6,14 @@ import Login from './pages/login'
 import Homepage from './pages/Homepage'
 import NotFound from './pages/NotFound'
 import ThreadView from './pages/ThreadView'
+import AdminDashboard from './pages/AdminDashboard'
 
 const App = () => {
   return (
     <div className='flex flex-col items-center w-screen h-screen bg-gray-200 font-[Inter]'>
       <Routes>
         <Route path='/' element={<Login />}/>
+        {/* <Route path='/' element={<AdminDashboard />}/> */}
         <Route path='/register' element={<Register />}/>
         <Route path='/home' element={
           <ProtectedRoute>
