@@ -2,6 +2,8 @@ import axiosInstance from "../utils/axios";
 import { useState } from "react";
 import LogoutButton from '../components/logoutButton';
 
+
+const CreateThread = () => {
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -30,8 +32,8 @@ import LogoutButton from '../components/logoutButton';
             });
             toast.success('Thread Created Successfully!');
             console.log(response.data);
-            FetchAllThread(); 
-            
+            FetchAllThread();
+
         } catch (error) {
             console.log(error.response.data.category[0]);
             toast.error(error.response.data.category[0])
@@ -40,7 +42,7 @@ import LogoutButton from '../components/logoutButton';
     };
 
     return (
-        <div className="bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center">
+        <div div className="bg-white rounded-xl w-full lg:w-2/5 p-5 border-2 border-gray-300 shadow-xl flex flex-col gap-5 items-center" >
             <form
                 onSubmit={HandleCreateThread}
                 className="bg-white rounded-2xl p-8 w-full space-y-4"
@@ -76,7 +78,7 @@ import LogoutButton from '../components/logoutButton';
                     w-5/5 py-2 px-2 border-2 bg-white shadow-md border-gray-200 rounded-md placeholder:text-gray-600 focus:outline-none focus:border-cyan-600 focus:scale-105 transition-all h-32 resize-none"
                 />
 
-                    <h1>Post As</h1>
+                <h1>Post As</h1>
                 <div className="flex flex-row sm:flex-row items-start sm:items-center gap-3">
                     <label className="flex items-center gap-2">
                         <input
@@ -114,4 +116,4 @@ import LogoutButton from '../components/logoutButton';
     );
 };
 
-export default CreateThread;
+export default CreateThread

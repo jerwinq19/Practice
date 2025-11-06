@@ -6,13 +6,10 @@ import Login from './pages/login'
 import Homepage from './pages/Homepage'
 import NotFound from './pages/NotFound'
 import ThreadView from './pages/ThreadView'
-<<<<<<< HEAD
 import UserPorfile from './pages/ProfilePage'
 import DashboardView from './pages/Dashboard'
 
-=======
 import AdminDashboard from './pages/AdminDashboard'
->>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 
 const App = () => {
   return (

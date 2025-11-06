@@ -1,11 +1,7 @@
 import LogoutButton from "../components/logoutButton";
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axios";
 import Comment from "../components/CommentInput";
-=======
-// import Comment from "../components/CommentInput";
->>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 import CreateThread from "./CreateThread";
 import ThreadPost from "../components/ThreadPost";
 import toast, { Toaster } from "react-hot-toast";

@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import FetchCurrentUser from "../utils/userInfo"; // always use this to get the user info may mga data kasing need dun
+// import FetchCurrentUser from "../utils/userInfo"; // always use this to get the user info may mga data kasing need dun
 import axiosInstance from "../utils/axios";
 
 const AuthContext = createContext();
