@@ -1,15 +1,6 @@
 import axiosInstance from "../utils/axios";
 import { useState } from "react";
 import LogoutButton from '../components/logoutButton';
-<<<<<<< HEAD
-=======
-import FetchCurrentUser from "../utils/userInfo";
-import { useAuthContext } from "../utils/context";
-import { toast } from 'react-hot-toast'
-
-const CreateThread = () => {
-    const { FetchAllThread } = useAuthContext()
->>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
@@ -42,12 +33,8 @@ const CreateThread = () => {
             FetchAllThread(); 
             
         } catch (error) {
-<<<<<<< HEAD
             console.log(error.response.data.category[0]);
             toast.error(error.response.data.category[0])
-=======
-            console.log(error);
->>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
             toast.error('Failed to Create Thread. Please try again.');
         }
     };

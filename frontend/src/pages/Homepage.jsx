@@ -11,7 +11,6 @@ import ThreadPost from "../components/ThreadPost";
 import toast, { Toaster } from "react-hot-toast";
 import PaginatedButton from "../components/paginatedButton";
 import Category from "../components/Category";
-<<<<<<< HEAD
 import ProfileButton from "../components/profileButton";
 import DashBoardButton from "../components/dashboardButton";
 
@@ -45,22 +44,6 @@ const Homepage = () => {
     caller();
   }, []);
 
-=======
-import { useAuthContext, ContextProvider } from "../utils/context";
-
-const Homepage = () => {
-  const {
-     threads,
-     setThreads,
-     FetchAllThread,
-     next,
-     prev,
-     setNext,
-     setPrev, 
-     user,
-     setUser
-       } = useAuthContext();
->>>>>>> 9851313a85a9bb9bbef4f61e2424563cd6056570
 
   return (
     <div className=" w-screen relative bg-gray-200 flex flex-col lg:flex-row-reverse">
