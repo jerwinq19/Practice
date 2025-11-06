@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
+import { useAuthContext } from "../utils/context";
 
-const Category = ({ setThreads, setNext, setPrev }) => {
+const Category = () => {
+  const {setThreads, setNext, setPrev } = useAuthContext()
+
   const [category, setCategory] = useState("ALL");
 
   const fetchCategoryThread = async () => {
